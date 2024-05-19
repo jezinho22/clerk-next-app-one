@@ -8,7 +8,7 @@ import {
     UserButton
   } from '@clerk/nextjs'
 
-export default function Header() {
+export default function Header({userId}) {
   return (
     <>
     <h1>Playground_Taunts.com</h1>
@@ -22,12 +22,15 @@ export default function Header() {
             <li>
                 <Link href="/">Home</Link>
             </li>
+            {userId && <><li>
+                <Link href="/allnames">View all names</Link>
+            </li>            
             <li>
-                <Link href="/posts">View all posts</Link>
+                <Link href="/yournames">View your names</Link>
             </li>
             <li>
-                <Link href="/addpost">Add a post</Link>
-            </li>
+                <Link href="/addname">Add names</Link>
+            </li></>}
         </ul>
     </>
   )
