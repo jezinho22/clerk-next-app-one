@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#Playground Taunts dot com
 
-## Getting Started
+- Post your proposed names for your child and find out what the nicknames might be - is it worth the risk?
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+CREATE TABLE IF NOT EXISTS user_profile 
+( id SERIAL PRIMARY KEY,
+  username VARCHAR(255),
+  clerk_id VARCHAR(255),
+  first_name TEXT,
+  last_name TEXT,
+  UNIQUE (clerk_id)
+  )
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+CREATE TABLE IF NOT EXISTS child_names
+( id SERIAL PRIMARY KEY,
+  clerk_id VARCHAR(255) REFERENCES user_profile(clerk_id),
+  first_name TEXT,
+  last_name TEXT,
+  comment TEXT  )
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+  CREATE TABLE IF NOT EXISTS comments
+( id SERIAL PRIMARY KEY,
+  clerk_id VARCHAR(255) REFERENCES user_profile(clerk_id),
+  post_id INT references child_names(id),
+  comment TEXT
+  )
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+  CREATE TABLE IF NOT EXISTS comment_likes
+  ( id SERIAL PRIMARY KEY,
+  clerk_id VARCHAR(255) REFERENCES user_profile(clerk_id),
+  post_id INT references child_names(id),
+  comment_id INT REFERENCES comments(id),
+  vote TEXT
+  )
 
-## Learn More
+  CREATE TABLE IF NOT EXISTS child_name_likes
+( id SERIAL PRIMARY KEY,
+  clerk_id VARCHAR(255) REFERENCES user_profile(clerk_id),
+  post_id INT references child_names(id),
+  vote TEXT
+  )
 
-To learn more about Next.js, take a look at the following resources:
+INSERT INTO user_profile (username, clerk_id, first_name, last_name)
+VALUES ('jezinho', 'jo2327R4', 'Jez', 'Johns'),
+('dibster', 'nl60xct', 'Lily', 'Johns')
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+select * from user_profile
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+INSERT INTO child_names 
+(clerk_id, first_name, last_name, comment)
+VALUES ('jo2327R4', 'Christopher', 'Peacock', 'Boy'),
+('jo2327R4', 'Andrew', 'Peacock', 'Boy'),
+('jo2327R4', 'Louise', 'Peacock', 'Girl'),
+('nl60xct', 'Paul', 'Lee', 'Boy'),
+('nl60xct', 'Kevin', 'Lee', 'Boy'),
+('nl60xct', 'Kai', 'Lee','Boy')
 
-## Deploy on Vercel
+SELECT child_names.first_name, child_names.last_name, child_names.comment, user_profile.username,  
+FROM child_names JOIN user_profile ON child_names.clerk_id = user_profile.clerk_id
+WHERE user_profile.clerk_id = 'nl60xct'
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```

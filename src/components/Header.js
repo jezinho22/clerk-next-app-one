@@ -11,7 +11,7 @@ import {
 export default function Header() {
   return (
     <>
-    <h2>Red Dwarf</h2>
+    <h1>Playground_Taunts.com</h1>
         <SignedOut>
         <SignInButton />
         </SignedOut>
