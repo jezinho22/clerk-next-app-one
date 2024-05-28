@@ -17,24 +17,31 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
 
-  // trying to work out how to get info from auth
-const {userId} = auth()
-console.log("user id from auth: ", userId)
-const user = await currentUser();
+  const user = await currentUser();
+  if (user) {
 
-// struggling a little with the query output
-const profile = sql `SELECT * FROM user_profile WHERE clerk_id = ${userId}`
-console.log(profile.rows)
+    console.log(user.lastName)
+    // need to account for the situation when nobody is logged in  - so no user
 
-// if (!profile) {
-//   sql `INSERT INTO user_profile (first_name, last_name, clerk_id)`
-// }
+    const profiles = await sql `SELECT * FROM user_profile WHERE clerk_id = ${user.id}`;
+
+    // if the user is logged in AND they don't have an entry in the profiles table, add it
+    if (profiles.rowCount === 0 && user.id !== null) {
+
+      // add them to our database
+      await sql `INSERT INTO user_profile (username, first_name, last_name, clerk_id) 
+                 VALUES (NULL, ${user.firstName}, ${user.lastName}, ${user.id})`
+    }
+    
+    const hasUsername = profiles.rows[0]?.username !== null ? true : false;
+  }  
+  // has username will be true if we have a username and (shockingly) false if we don't
 
   return (
     <ClerkProvider>
       <html lang="en">
         <body>
-          <Header userId = {userId}/>
+          <Header userId = {user ? user.id : null} />
           {children}
           <Footer/>
         </body>
