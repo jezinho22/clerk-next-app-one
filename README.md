@@ -56,8 +56,26 @@ VALUES ('jo2327R4', 'Christopher', 'Peacock', 'Boy'),
 ('nl60xct', 'Kevin', 'Lee', 'Boy'),
 ('nl60xct', 'Kai', 'Lee','Boy')
 
-SELECT child_names.first_name, child_names.last_name, child_names.comment, user_profile.username,  
-FROM child_names JOIN user_profile ON child_names.clerk_id = user_profile.clerk_id
-WHERE user_profile.clerk_id = 'nl60xct'
+# your own posts and the comments
+SELECT child_names.first_name, child_names.last_name, child_names.comment AS post_comment, user_profile.username, comments.comment 
+FROM child_names 
+JOIN user_profile ON child_names.clerk_id = user_profile.clerk_id
+JOIN comments ON comments.post_id = child_names.id
+WHERE user_profile.clerk_id = 'jo2327R4'
+
+# comments for a user id
+SELECT comments.comment, user_profile.username
+FROM comments
+JOIN user_profile
+ON comments.author_id = user_profile.clerk_id
+WHERE comments.author_id = 'nl60XCT'
+
+# name, comment and comment author
+SELECT comments.comment, user_profile.username, child_names.first_name, child_names.last_name
+FROM comments
+JOIN user_profile
+ON comments.author_id = user_profile.clerk_id
+JOIN child_names
+ON comments.post_id = child_names.id
 
 ```

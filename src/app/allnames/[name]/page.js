@@ -15,6 +15,7 @@ export default async function SingleName({params}) {
     async function handleSubmit (formData){
         "use server";
         const comment = formData.get("comment")
+        console.log(`VALUES (${userId}, ${params.name}, ${comment})`)
     
         await sql `INSERT INTO comments 
         (clerk_id, post_id, comment)
