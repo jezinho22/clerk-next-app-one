@@ -1,6 +1,6 @@
 
 export default function Footer() {
   return (
-    <div>Jezinho 2024</div>
+    <div className="bg-shamrockgreen text-mintcream">Jezinho 2024</div>
   )
 }

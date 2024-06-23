@@ -1,9 +1,10 @@
 import { sql } from "@vercel/postgres";
 import Link from 'next/link'
 
+export const revalidate = 1
 export default async function AllNames() {
 
-  const result = await sql `SELECT child_names.id, child_names.first_name, child_names.last_name, child_names.comment, user_profile.username  
+  const result = await sql `SELECT child_names.first_name, child_names.last_name, child_names.id, child_names.comment, user_profile.username  
   FROM child_names JOIN user_profile ON child_names.clerk_id = user_profile.clerk_id`
   const posts = result.rows
 

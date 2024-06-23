@@ -70,12 +70,39 @@ JOIN user_profile
 ON comments.author_id = user_profile.clerk_id
 WHERE comments.author_id = 'nl60XCT'
 
-# name, comment and comment author
-SELECT comments.comment, user_profile.username, child_names.first_name, child_names.last_name
+# name, post author
+
+SELECT child_names.first_name, child_names.last_name, child_names.comment, user_profile.username  
+FROM child_names 
+JOIN user_profile 
+ON child_names.clerk_id = user_profile.clerk_id
+WHERE child_names.id = 5
+
+# comment and author username
+
+SELECT comments.comment, user_profile.username
 FROM comments
 JOIN user_profile
 ON comments.author_id = user_profile.clerk_id
-JOIN child_names
-ON comments.post_id = child_names.id
+WHERE comments.post_id = 3
 
+
+# another try at all my names plus their comments
+
+SELECT child_names.first_name,  child_names.last_name, comments.comment , user_profile.username
+FROM child_names
+JOIN comments
+ON child_names.id = comments.post_id
+JOIN user_profile
+ON comments.author_id = user_profile.clerk_id
+
+SELECT child_names.first_name, child_names.last_name, 
+  ARRAY_AGG(comments.comment) AS comments, 
+  ARRAY_AGG(user_profile.username) AS authors 
+  FROM child_names JOIN comments 
+  ON child_names.id = comments.post_id
+  JOIN user_profile
+  ON user_profile.clerk_id = comments.author_id
+  WHERE child_names.clerk_id = 'user_2hsw0lhfZFs7eKLnKLX7zyaotku'
+  GROUP BY child_names.id
 ```

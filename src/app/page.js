@@ -3,7 +3,7 @@ export default function Home() {
 
 
   return (
-    <>
+    <div className="bg-teagreen m-5 rounded p-3">
     <h2>Your handy helper for naming your new-born</h2>
     <h3>What it is for</h3>
     <p>Your child may not always be called by the name you give them.</p>
@@ -15,6 +15,6 @@ export default function Home() {
     <p>Post the name you are thinking of here, and the community will let you know the possible nicknames.</p>
     <p>Then you can make a fully informed choice.</p>
     
-    </>
+    </div>
   );
 }

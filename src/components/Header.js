@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import {
     ClerkProvider,
@@ -8,22 +9,31 @@ import {
     UserButton
   } from '@clerk/nextjs'
 
-export default function Header({userId}) {
+  import x from "../../public/vecteezy_cute-cartoon-boy-laughing-out-loudly-pointing_18792623.jpg"
+export default function Header({user}) {
   return (
-    <>
-    <h1>Playground_Taunts.com</h1>
+    <div className="bg-shamrockgreen p-2 text-mintcream">
+      <Image  src="/vecteezy_cute-cartoon-boy-laughing-out-loudly-pointing_18792623.jpg" 
+              alt="logo"
+              width={100}
+              height={100}
+              className = "rounded-full"/>
+    <h1 className="text-2xl">Playground_Taunts.com</h1>
         <SignedOut>
-        <SignInButton />
+          <SignInButton />
         </SignedOut>
-        <SignedIn>
-        <UserButton />
+          <SignedIn >          
+            {user && <div className="flex flex-row align-middle">        
+                <UserButton />
+                <p className="ml-5">{user.username}</p>
+            </div>}
         </SignedIn>
-        <ul>    
-            <li>
+        <ul className="flex flex-row justify-between">    
+            <li >
                 <Link href="/">Home</Link>
             </li>
-            {userId && <><li>
-                <Link href="/allnames">View all names</Link>
+            {user && <><li>
+                <Link href="/allnames" className="hover:scale-25 p-1">View all names</Link>
             </li>            
             <li>
                 <Link href="/yournames">View your names</Link>
@@ -32,6 +42,7 @@ export default function Header({userId}) {
                 <Link href="/addname">Add names</Link>
             </li></>}
         </ul>
-    </>
+
+    </div>
   )
 }
