@@ -1,5 +1,7 @@
 import { sql } from "@vercel/postgres";
 import { auth } from '@clerk/nextjs/server';
+import { getNamesAndComments} from '../../components/server_actions';
+import Link from 'next/link'
 
 import Comment from '../../components/Comment.js'
 
@@ -7,63 +9,26 @@ export default async function YourNames() {
 
   const {userId} = auth();
 
-  const result = await sql `SELECT 
-    child_names.first_name, 
-    child_names.last_name, 
-    child_names.id AS post_id,
-    ARRAY_AGG(comments.id) FILTER (WHERE comments.id IS NOT NULL) AS comment_ids,
-    ARRAY_AGG(comments.comment) FILTER (WHERE comments.comment IS NOT NULL) AS comments, 
-    ARRAY_AGG(user_profile.username) FILTER (WHERE user_profile.username IS NOT NULL) AS authors,
-    ARRAY_AGG(comments.parent_id) AS parent_ids
+  const data = await getNamesAndComments("user_2hsmwJjMKkKQdT9NiSXVm8DR1gu", "", sql)
 
-    FROM child_names LEFT JOIN comments 
-    ON child_names.id = comments.post_id
-    LEFT JOIN user_profile 
-    ON user_profile.clerk_id = comments.author_id
-    WHERE child_names.clerk_id = ${userId}
-    GROUP BY child_names.id`
-  const posts = result.rows
-
-  // lengthy mapping to process all the data into a neat object to send for rendering
-  const names = posts.map((child_name) => {
-
-    const comments =  child_name.comments == null ? [] : child_name.comments.map((comment, index) =>  {
-      return ({comment: comment, 
-              author: child_name.authors[index], 
-              commentId: child_name.comment_ids[index],
-              parentId: child_name.parent_ids[index]}
-            )})
-
-    console.log(comments)
-    const newObj = {first_name:child_name.first_name, 
-                    last_name:child_name.last_name,
-                    post_id:child_name.post_id,
-                    comments: comments
-                    }
-    return newObj
-    })
-
-  return (
+    // comment object has comment, commentId, author, parentId and postId
       
-    <div>
-      <h2>Review the comments on your name ideas here</h2>
-
-      {names.map((name) => {
-        return (
-          <div key={"child" + name.id} className="bg-shamrockgreen">
-          <h3>{name.first_name} {name.last_name}</h3>
-          <h4>{name.username}</h4>
-          <ul>
-          {name.comments.map((comment) => {
-            return (
-              <Comment comment={comment} userId={userId}/>
-
-              )})}
-          </ul>
-          
-          </div>
-        )})}
-    </div>
+  const result = await sql `SELECT child_names.first_name, child_names.last_name, child_names.id, child_names.comment, user_profile.username  
+                            FROM child_names JOIN user_profile 
+                            ON child_names.clerk_id = user_profile.clerk_id
+                            WHERE user_profile.clerk_id = ${userId}`
+  const posts = result.rows
   
+    return (
+      <div>
+        <h2>See all the names here and add your thoughts</h2>
+        {posts && posts.map((child_name) => {
+          return (
+            <Link href={`/allnames/${child_name.id}`} key={"child_" + child_name.id}>
+               <h4 >{child_name.first_name} {child_name.last_name}</h4>
+            </Link>
+          )
+        })}  
+      </div>
   )
 }

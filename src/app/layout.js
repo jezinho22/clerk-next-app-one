@@ -21,7 +21,7 @@ export default async function RootLayout({ children }) {
   const user = await currentUser();
 
   if (user) {
-    console.log('username: ',user.username)
+    // console.log('username: ',user.username)
     // need to account for the situation when nobody is logged in  - so no user
     const profiles = await sql `SELECT * FROM user_profile WHERE clerk_id = ${user.id}`;
 

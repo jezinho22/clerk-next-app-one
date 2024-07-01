@@ -19,14 +19,6 @@ export default async function AllNames() {
         )
       })}
 
-<ul>
-      {posts.map((post) => (
-        <li key={post.id}>
-          <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-        </li>
-      ))}
-    </ul>
-
     </div>
   )
 }

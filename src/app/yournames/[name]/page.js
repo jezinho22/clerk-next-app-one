@@ -10,18 +10,16 @@ export default async function SingleName({params}) {
     const {userId} = auth();
     const postId = params.name
     console.log("postId: ", postId)
-    
-    // get the name and comments
-    //      ####### FIX THE SQL TO ONLY GET ONE NAME   #######
-    const childname = await getNamesAndComments(postId)
-  
-    console.log("getnamesandcomments: ", childname)
+    const childnameResult = await getNamesAndComments("", postId, sql)
+    const childname = childnameResult[0]
+    console.log(childname)
 
     const result = await sql `SELECT user_profile.username 
                           FROM child_names JOIN user_profile
                           ON child_names.clerk_id = user_profile.clerk_id
                           WHERE child_names.id=${postId}`
     const username = result.rows[0].username;
+    
     // const data = await sql `SELECT child_names.first_name, child_names.last_name, child_names.comment, user_profile.username AS username 
     // FROM child_names 
     // JOIN user_profile 
@@ -44,11 +42,11 @@ export default async function SingleName({params}) {
     <div>
         <h3>{childname.first_name} {childname.last_name}</h3>
         <h4>{username}</h4>
-        <CommentForm userId={userId} postId= {postId} parentId={null}/>
         <ul>
         {childname.comments.length > 0 &&  childname.comments.map((comment) => {
           return (
             <div>
+              <CommentForm userId={userId} postId= {comment.postId} parentId={comment.id}/>
               <Comment comment = {comment} userId={userId} postId= {postId}/>
             </div> 
           )})}
