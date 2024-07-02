@@ -9,17 +9,17 @@ export default async function SingleName({params}) {
 
     const {userId} = auth();
     const postId = params.name
-    console.log("postId: ", postId)
+    console.log("yournames postId: ", params.name)
+
     const childnameResult = await getNamesAndComments("", postId, sql)
     const childname = childnameResult[0]
-    console.log(childname)
 
     const result = await sql `SELECT user_profile.username 
                           FROM child_names JOIN user_profile
                           ON child_names.clerk_id = user_profile.clerk_id
                           WHERE child_names.id=${postId}`
     const username = result.rows[0].username;
-    
+
     // const data = await sql `SELECT child_names.first_name, child_names.last_name, child_names.comment, user_profile.username AS username 
     // FROM child_names 
     // JOIN user_profile 

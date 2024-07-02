@@ -34,7 +34,7 @@ export async function testing (formData) {
 // big database fetch for single name and your names
 export async function getNamesAndComments (postId) {
 
-        // console.log("POSTID: ", postId)
+        console.log("POSTID: ", postId)
 
         const result = await sql `SELECT 
         child_names.first_name, 

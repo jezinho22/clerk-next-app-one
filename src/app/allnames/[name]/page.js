@@ -9,13 +9,13 @@ export default async function SingleName({params}) {
 
     const {userId} = auth();
     const postId = params.name
-    console.log("postId: ", postId)
+    // console.log("postId: ", postId)
     
     // get the name and comments
     //      ####### FIX THE SQL TO ONLY GET ONE NAME   #######
     const childname = await getNamesAndComments(postId)
   
-    console.log("getnamesandcomments: ", childname)
+    // console.log("getnamesandcomments: ", childname)
 
     const result = await sql `SELECT user_profile.username 
                           FROM child_names JOIN user_profile
@@ -46,9 +46,9 @@ export default async function SingleName({params}) {
         <h4>{username}</h4>
         <CommentForm userId={userId} postId= {postId} parentId={null}/>
         <ul>
-        {childname.comments.length > 0 &&  childname.comments.map((comment) => {
+        {childname.comments.length > 0 &&  childname.comments.map((comment, index) => {
           return (
-            <div>
+            <div key={"comment_" + index}>
               <Comment comment = {comment} userId={userId} postId= {postId}/>
             </div> 
           )})}
