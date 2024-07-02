@@ -9,7 +9,7 @@ export async function handleCommentSubmit (formData){
     const userId = await formData.get("userId")
     const postId = await formData.get("postId")
     const parentId = await formData.get("parentId")
-    console.log(`VALUES (${userId}, ${postId}, ${!parentId ? "something" : "nothing!"})`)
+    console.log(`VALUES (${userId}, ${postId}, ${parentId})`)
 
     await sql `INSERT INTO comments 
     (author_id, post_id, comment, parent_id)
@@ -74,4 +74,8 @@ export async function getNamesAndComments (postId) {
 
         return output
 
+}
+
+export async function (postId, parentId) {
+    const comments = await sql`SELECT * FROM comments WHERE parent_id={}`
 }
