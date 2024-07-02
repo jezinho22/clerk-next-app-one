@@ -76,6 +76,3 @@ export async function getNamesAndComments (postId) {
 
 }
 
-export async function (postId, parentId) {
-    const comments = await sql`SELECT * FROM comments WHERE parent_id={}`
-}
