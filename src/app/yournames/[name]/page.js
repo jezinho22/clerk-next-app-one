@@ -9,17 +9,17 @@ export default async function SingleName({params}) {
 
     const {userId} = auth();
     const postId = params.name
-    console.log("postId: ", postId)
+    console.log("yournames postId: ", params.name)
+
     const childnameResult = await getNamesAndComments("", postId, sql)
     const childname = childnameResult[0]
-    console.log(childname)
 
     const result = await sql `SELECT user_profile.username 
                           FROM child_names JOIN user_profile
                           ON child_names.clerk_id = user_profile.clerk_id
                           WHERE child_names.id=${postId}`
     const username = result.rows[0].username;
-    
+
     // const data = await sql `SELECT child_names.first_name, child_names.last_name, child_names.comment, user_profile.username AS username 
     // FROM child_names 
     // JOIN user_profile 
@@ -43,9 +43,9 @@ export default async function SingleName({params}) {
         <h3>{childname.first_name} {childname.last_name}</h3>
         <h4>{username}</h4>
         <ul>
-        {childname.comments.length > 0 &&  childname.comments.map((comment) => {
+        {childname.comments.length > 0 &&  childname.comments.map((comment, index) => {
           return (
-            <div>
+            <div key={"comment_" + index}>
               <CommentForm userId={userId} postId= {comment.postId} parentId={comment.id}/>
               <Comment comment = {comment} userId={userId} postId= {postId}/>
             </div> 

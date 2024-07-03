@@ -15,6 +15,7 @@ export default function Header({user}) {
     <div className="bg-shamrockgreen p-2 text-mintcream">
       <Image  src="/vecteezy_cute-cartoon-boy-laughing-out-loudly-pointing_18792623.jpg" 
               alt="logo"
+              priority={true}
               width={100}
               height={100}
               className = "rounded-full"/>

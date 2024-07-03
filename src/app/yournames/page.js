@@ -9,7 +9,7 @@ export default async function YourNames() {
 
   const {userId} = auth();
 
-  const data = await getNamesAndComments("user_2hsmwJjMKkKQdT9NiSXVm8DR1gu", "", sql)
+  // const data = await getNamesAndComments("user_2hsmwJjMKkKQdT9NiSXVm8DR1gu", "", sql)
 
     // comment object has comment, commentId, author, parentId and postId
       
