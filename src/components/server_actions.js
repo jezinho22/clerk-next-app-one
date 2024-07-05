@@ -76,3 +76,12 @@ export async function getNamesAndComments (postId) {
 
 }
 
+export async function handleDelete (postId) {
+    try {
+    await sql `DELETE FROM child_names WHERE id = ${postId}`    
+    } catch (error) {
+    
+    }
+    // revalidatePath(`/yournames`);
+    // redirect(`/yournames`)
+}

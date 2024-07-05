@@ -9,37 +9,46 @@ import {
     UserButton
   } from '@clerk/nextjs'
 
-  import x from "../../public/vecteezy_cute-cartoon-boy-laughing-out-loudly-pointing_18792623.jpg"
 export default function Header({user}) {
   return (
     <div className="bg-shamrockgreen p-2 text-mintcream">
+      <div className="flex justify-end">
+        <SignedOut>
+          <SignInButton/>
+        </SignedOut>
+        <SignedIn >          
+          {user && 
+            <div className="flex flex-row align-middle justify-end">        
+              <p className="mr-5 text-sm justify-self-end">{user.username}</p>
+              <UserButton />
+            </div>}
+        </SignedIn>
+      </div>
+      <div className="flex items-center">
       <Image  src="/vecteezy_cute-cartoon-boy-laughing-out-loudly-pointing_18792623.jpg" 
               alt="logo"
               priority={true}
-              width={100}
-              height={100}
+              width={75}
+              height={75}
               className = "rounded-full"/>
-    <h1 className="text-2xl">Playground_Taunts.com</h1>
-        <SignedOut>
-          <SignInButton />
-        </SignedOut>
-          <SignedIn >          
-            {user && <div className="flex flex-row align-middle">        
-                <UserButton />
-                <p className="ml-5">{user.username}</p>
-            </div>}
-        </SignedIn>
-        <ul className="flex flex-row justify-between">    
-            <li >
+      <div className="flex-col ">
+        <h1 className="text-2xl">Playground_</h1>
+        <h1 className="text-2xl">Taunts</h1>
+      </div>
+    </div>
+
+        <ul className="flex flex-row justify-between align-center">    
+            <li className="text-sm">
                 <Link href="/">Home</Link>
-            </li>
-            {user && <><li>
-                <Link href="/allnames" className="hover:scale-25 p-1">View all names</Link>
+            </li >
+            {user && <>
+            <li className="text-sm">
+                <Link href="/allnames">All names</Link>
             </li>            
-            <li>
-                <Link href="/yournames">View your names</Link>
+            <li className="text-sm">
+                <Link href="/yournames">Your names</Link>
             </li>
-            <li>
+            <li className="text-sm">
                 <Link href="/addname">Add names</Link>
             </li></>}
         </ul>

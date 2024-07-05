@@ -1,9 +1,11 @@
+// no tailwind
 import { sql } from "@vercel/postgres";
 import { auth } from '@clerk/nextjs/server';
 import { getNamesAndComments} from '../../components/server_actions';
 import Link from 'next/link'
 
 import Comment from '../../components/Comment.js'
+import Delete from '../../components/Delete.js'
 
 export default async function YourNames() {
 
@@ -26,6 +28,7 @@ export default async function YourNames() {
           return (
             <Link href={`/allnames/${child_name.id}`} key={"child_" + child_name.id}>
                <h4 >{child_name.first_name} {child_name.last_name}</h4>
+               <Delete postId={child_name.id}/>
             </Link>
           )
         })}  

@@ -3,9 +3,8 @@ export default function Home() {
 
 
   return (
-    <div className="bg-teagreen m-5 rounded p-3">
-    <h2>Your handy helper for naming your new-born</h2>
-    <h3>What it is for</h3>
+    <div className="bg-teagreen m-5 rounded p-3 w-auto text-sm">
+    <h2 className="font-semibold text-base pb-3">Your handy helper for naming your new-born!</h2>
     <p>Your child may not always be called by the name you give them.</p>
     <p>This site helps you look at what the name you give your child could become in the hands of others.</p>
     <p>Most likely it will be something you could easily think of: Samuel becoming Sam or Sammy.</p>

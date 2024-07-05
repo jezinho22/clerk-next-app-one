@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   color: inherit;
 }
 
@@ -15,6 +15,7 @@
 html,
 body {
   overflow-x: hidden;
+
 }
 
 
@@ -34,4 +35,4 @@ a {
   display: flex;
   flex-direction: row;
   color: red;
-}
+} */
