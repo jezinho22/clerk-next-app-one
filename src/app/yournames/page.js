@@ -24,8 +24,8 @@ export default async function YourNames() {
       <div>
         {posts && posts.map((child_name) => {
           return (
-            <div className="flex justify-between m-2 p-2 rounded-sm bg-glaucous text-mintcream">
-              <Link href={`/allnames/${child_name.id}`} key={"child_" + child_name.id}>
+            <div key={"child_" + child_name.id} className="flex justify-between m-2 p-2 rounded-sm bg-glaucous text-mintcream">
+              <Link href={`/allnames/${child_name.id}`}>
                 <h4 >{child_name.first_name} {child_name.last_name}</h4>
               </Link>
               <Delete postId={child_name.id}/>

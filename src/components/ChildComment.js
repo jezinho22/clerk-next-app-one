@@ -6,7 +6,7 @@ export default function ChildComments({parentId, postId}) {
     const [showComments, setShowComments] = useState([])
 
     function handleShowComments (){
-        console.log("child comments is working")
+        // console.log("child comments is working")
         //call a server function that fetches the comments that match
         // render the button conditionally upon whether or not there are child comments
     }
