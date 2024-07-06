@@ -35,12 +35,13 @@ export default async function RootLayout({ children }) {
       await sql `UPDATE user_profile SET username = ${user.username} WHERE user_profile.clerk_id = ${user.id}`
     }
   }
+  //className = "bg-mintcream max-w-3xl"
 
   return (
     <ClerkProvider>
       <html lang="en">
         <body className="flex justify-center">
-          <div className = "bg-mintcream max-w-3xl">
+          <div className="w-600px">
             <Header user = {user ? user : null} />
             {children}
             <Footer/>

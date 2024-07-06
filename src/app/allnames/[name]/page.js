@@ -1,18 +1,16 @@
-
+// no tailwind
 import { sql } from "@vercel/postgres";
 import { auth } from '@clerk/nextjs/server';
 import Comment from '../../../components/Comment.js'
 import CommentForm from '../../../components/CommentForm.js'
 import {getNamesAndComments} from '../../../components/server_actions.js'
+import Delete from '../../../components/Delete.js'
 
 export default async function SingleName({params}) {
 
     const {userId} = auth();
     const postId = params.name
-    // console.log("postId: ", postId)
-    
-    // get the name and comments
-    //      ####### FIX THE SQL TO ONLY GET ONE NAME   #######
+
     const childname = await getNamesAndComments(postId)
   
     // console.log("getnamesandcomments: ", childname)
@@ -22,37 +20,29 @@ export default async function SingleName({params}) {
                           ON child_names.clerk_id = user_profile.clerk_id
                           WHERE child_names.id=${postId}`
     const username = result.rows[0].username;
-    // const data = await sql `SELECT child_names.first_name, child_names.last_name, child_names.comment, user_profile.username AS username 
-    // FROM child_names 
-    // JOIN user_profile 
-    // ON child_names.clerk_id = user_profile.clerk_id
-    // WHERE child_names.id = ${params.name}`
-    // const childName = data.rows[0]
-    // // console.log("childName: ", childName)
-
-    // const comment_data = await sql `SELECT comments.comment, comments.id, user_profile.username AS username 
-    // FROM comments
-    // JOIN user_profile
-    // ON comments.author_id = user_profile.clerk_id
-    // WHERE comments.post_id = ${params.name}`
-    // const comments = comment_data.rows
-    // // console.log("comments: ", comments)    
-
-    // comments has .comment, .id, 
 
   return (
-    <div>
-        <h3>{childname.first_name} {childname.last_name}</h3>
-        <h4>{username}</h4>
-        <CommentForm userId={userId} postId= {postId} parentId={null}/>
+    <div className="flex flex-col  m-2 p-2 rounded-sm bg-glaucous text-mintcream">
+      <div>
+        <h3 className="text-lg">{childname.first_name} {childname.last_name}</h3>
+        <h4 className="text-sm text-russianviolet mb-3">Posted by: {username}</h4>
+      </div>
+
+      <div >
+        <h3 className="text-russianviolet my-3 ">Comments:</h3>        
         <ul>
-        {childname.comments.length > 0 &&  childname.comments.map((comment, index) => {
-          return (
-            <div key={"comment_" + index}>
-              <Comment comment = {comment} userId={userId} postId= {postId}/>
-            </div> 
-          )})}
+          {childname.comments.length > 0 &&  childname.comments.map((comment, index) => {
+            return (
+              <div key={"comment_" + index}>
+                <Comment comment = {comment} userId={userId} postId= {postId}/>
+              </div> 
+            )})}
         </ul>
+      </div>
+      <div className="flex flex-row justify-between">
+        <CommentForm userId={userId} postId= {postId} parentId={null}/>
+        <Delete postId={postId}/>
+      </div>    
     </div>
   )
 }
