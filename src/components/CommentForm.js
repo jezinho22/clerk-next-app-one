@@ -32,9 +32,9 @@ function handler (formData) {
                     id='comment' 
                     placeholder="comment" 
                     className="bg-teagreen text-russianviolet rounded-sm px-2"/>
-            <input name="userId" value={userId} className="hidden"/>
-            <input name="postId" value={postId}className="hidden"/>
-            <input name="parentId" value={null} className="hidden"/>
+            <input name="userId" defaultValue={userId} className="hidden"/>
+            <input name="postId" defaultValue={postId}className="hidden"/>
+            <input name="parentId" defaultValue="" className="hidden"/>
             <button type='submit' className="bg-russianviolet text-mintcream rounded-md my-5">Submit</button>
           </form>
       }

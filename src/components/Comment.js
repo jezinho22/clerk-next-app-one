@@ -4,7 +4,7 @@ import CommentForm from "./CommentForm"
 
 
 export default function Comment ({comment}) {
-  console.log("COMMENT: ", comment)
+  // console.log("COMMENT: ", comment)
 
   //className="bg-glaucous text-mintcream border-russianviolet m-5 p-2"
   return (
