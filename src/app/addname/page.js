@@ -28,19 +28,28 @@ export default async function AddName() {
 
   return (
     <div>
-        <h2>You can add your prospective names here</h2>
-        <form className="formAddName" action={handleSubmit}>
+        <h2  className="text-lg p-5">You can add your prospective names here</h2>
+        <form className="px-5 m-5 flex flex-col" action={handleSubmit}>
+        <div className="py-2">
+          <label htmlFor="firstName" className="p-5">First name</label>
+          <input type='text' 
+                  name='firstName' 
+                  id='firstName' 
+                  placeholder="First name"
+                  className="bg-teagreen text-russianviolet rounded-sm px-2" />
+        </div>
+        <div className="py-2">
+          <label htmlFor="lastName" className="p-5">Last name</label>
+          <input type='text' 
+                  name='lastName' 
+                  id='lastName' 
+                  defaultValue={user.lastName}
+                  className="bg-teagreen text-russianviolet rounded-sm px-2"/>
+        </div>
+          {/* <label htmlFor="comment">Comment</label>
+          <input type='text' name='comment' id='comment' placeholder="comment"/> */}
 
-          <label htmlFor="firstName">First name</label>
-          <input type='text' name='firstName' id='firstName' placeholder="First name"/>
-
-          <label htmlFor="lastName">Last name</label>
-          <input type='text' name='lastName' id='lastName' defaultValue={user.lastName}/>
-
-          <label htmlFor="comment">Comment</label>
-          <input type='text' name='comment' id='comment' placeholder="comment"/>
-
-          <button type='submit'>Submit</button>
+          <button type='submit' className="px-3 my-10 self-center bg-russianviolet text-mintcream rounded-md w-40">Submit</button>
 
         </form>
     </div>

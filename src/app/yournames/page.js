@@ -1,7 +1,6 @@
 // no tailwind
 import { sql } from "@vercel/postgres";
 import { auth } from '@clerk/nextjs/server';
-import { getNamesAndComments} from '../../components/server_actions';
 import Link from 'next/link'
 
 import Comment from '../../components/Comment.js'
@@ -23,13 +22,14 @@ export default async function YourNames() {
   
     return (
       <div>
-        <h2>See all the names here and add your thoughts</h2>
         {posts && posts.map((child_name) => {
           return (
-            <Link href={`/allnames/${child_name.id}`} key={"child_" + child_name.id}>
-               <h4 >{child_name.first_name} {child_name.last_name}</h4>
-               <Delete postId={child_name.id}/>
-            </Link>
+            <div className="flex justify-between m-2 p-2 rounded-sm bg-glaucous text-mintcream">
+              <Link href={`/allnames/${child_name.id}`} key={"child_" + child_name.id}>
+                <h4 >{child_name.first_name} {child_name.last_name}</h4>
+              </Link>
+              <Delete postId={child_name.id}/>
+            </div>
           )
         })}  
       </div>

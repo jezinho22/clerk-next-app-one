@@ -23,15 +23,19 @@ function handler (formData) {
   // need to pass data along with formData but cannot do this to a handler
   return (
     <div>
-      <button onClick={()=>setShowForm(!showForm)}>Comment on this</button>
+      <button onClick={()=>setShowForm(!showForm)} className="text-mintcream bg-pakistangreen pl-2 pr-2 rounded-md hover:border-midnight">Add comment</button>
       {showForm && 
-          <form action={handler}>
-            <label htmlFor="comment">Comment</label>
-            <input type='text' name='comment' id='comment' placeholder="comment" className="text-russianviolet"/>
-            <input name="userId" value={userId} className="invisible"/>
-            <input name="postId" value={postId}className="invisible"/>
-            <input name="parentId" value={null} className="invisible"/>
-            <button type='submit'>Submit</button>
+          <form action={handler} className="flex flex-col p-5">
+            <label htmlFor="comment" className="text-russianviolet m-2">Comment</label>
+            <input type='text' 
+                    name='comment' 
+                    id='comment' 
+                    placeholder="comment" 
+                    className="bg-teagreen text-russianviolet rounded-sm px-2"/>
+            <input name="userId" value={userId} className="hidden"/>
+            <input name="postId" value={postId}className="hidden"/>
+            <input name="parentId" value={null} className="hidden"/>
+            <button type='submit' className="bg-russianviolet text-mintcream rounded-md my-5">Submit</button>
           </form>
       }
     </div>

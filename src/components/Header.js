@@ -12,29 +12,34 @@ import {
 export default function Header({user}) {
   return (
     <div className="bg-shamrockgreen p-2 text-mintcream">
-      <div className="flex justify-end">
-        <SignedOut>
-          <SignInButton/>
-        </SignedOut>
-        <SignedIn >          
-          {user && 
-            <div className="flex flex-row align-middle justify-end">        
-              <p className="mr-5 text-sm justify-self-end">{user.username}</p>
-              <UserButton />
-            </div>}
-        </SignedIn>
-      </div>
-      <div className="flex items-center">
-      <Image  src="/vecteezy_cute-cartoon-boy-laughing-out-loudly-pointing_18792623.jpg" 
-              alt="logo"
-              priority={true}
-              width={75}
-              height={75}
-              className = "rounded-full"/>
-      <div className="flex-col ">
-        <h1 className="text-2xl">Playground_</h1>
-        <h1 className="text-2xl">Taunts</h1>
-      </div>
+      <div className="flex flex-row items-center justify-between pb-5 ">
+
+        <div className="flex items-center w-200">
+          <Image  src="/vecteezy_cute-cartoon-boy-laughing-out-loudly-pointing_18792623.jpg" 
+                  alt="logo"
+                  priority={true}
+                  width={75}
+                  height={75}
+                  className = "rounded-full"/>
+          <div className="flex-col ">
+            <h1 className="text-2xl">Playground_</h1>
+            <h1 className="text-2xl">Taunts</h1>
+          </div>
+        </div>
+        <div>
+          <SignedOut>
+            <SignInButton/>
+          </SignedOut>
+          <SignedIn >          
+            {user && 
+              <div className="flex flex-col items-center justify-center">        
+                <UserButton />                
+                <p className="mr-5 text-sm self-center text-center">{user.username}</p>
+
+              </div>}
+          </SignedIn>
+        </div>
+        
     </div>
 
         <ul className="flex flex-row justify-between align-center">    

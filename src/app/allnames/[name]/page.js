@@ -22,19 +22,27 @@ export default async function SingleName({params}) {
     const username = result.rows[0].username;
 
   return (
-    <div>
-        <h3>{childname.first_name} {childname.last_name}</h3>
-        <h4>{username}</h4>
-        <Delete postId={postId}/>
-        <CommentForm userId={userId} postId= {postId} parentId={null}/>
+    <div className="flex flex-col  m-2 p-2 rounded-sm bg-glaucous text-mintcream">
+      <div>
+        <h3 className="text-lg">{childname.first_name} {childname.last_name}</h3>
+        <h4 className="text-sm text-russianviolet mb-3">Posted by: {username}</h4>
+      </div>
+
+      <div >
+        <h3 className="text-russianviolet my-3 ">Comments:</h3>        
         <ul>
-        {childname.comments.length > 0 &&  childname.comments.map((comment, index) => {
-          return (
-            <div key={"comment_" + index}>
-              <Comment comment = {comment} userId={userId} postId= {postId}/>
-            </div> 
-          )})}
+          {childname.comments.length > 0 &&  childname.comments.map((comment, index) => {
+            return (
+              <div key={"comment_" + index}>
+                <Comment comment = {comment} userId={userId} postId= {postId}/>
+              </div> 
+            )})}
         </ul>
+      </div>
+      <div className="flex flex-row justify-between">
+        <CommentForm userId={userId} postId= {postId} parentId={null}/>
+        <Delete postId={postId}/>
+      </div>    
     </div>
   )
 }

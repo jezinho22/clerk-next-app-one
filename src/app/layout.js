@@ -41,7 +41,7 @@ export default async function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en">
         <body className="flex justify-center">
-          <div >
+          <div className="w-600px">
             <Header user = {user ? user : null} />
             {children}
             <Footer/>
