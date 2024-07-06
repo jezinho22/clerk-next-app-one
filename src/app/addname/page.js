@@ -16,7 +16,7 @@ export default async function AddName() {
     const last_name = formData.get("lastName")
     const comment = formData.get("comment")
 
-    console.log(user.id, first_name, last_name, comment)
+    // console.log(user.id, first_name, last_name, comment)
 
     await sql `INSERT INTO child_names 
     (clerk_id, first_name, last_name, comment)

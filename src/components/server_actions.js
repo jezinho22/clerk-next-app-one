@@ -2,14 +2,17 @@
 import { sql } from "@vercel/postgres";
 import {revalidatePath} from "next/cache";
 import { redirect } from 'next/navigation';
+import { isNull } from "util";
 
 export async function handleCommentSubmit (formData){
-    console.log("handleCommentSubmit working")
+    // console.log("handleCommentSubmit working")
     const newComment = await formData.get("comment")
     const userId = await formData.get("userId")
     const postId = await formData.get("postId")
-    const parentId = await formData.get("parentId")
-    console.log(`VALUES (${userId}, ${postId}, ${parentId})`)
+    const commentId = await formData.get("parentId")
+    const parentId = commentId == "" ? null : commentId 
+
+    // console.log(`VALUES (${userId}, ${postId}, ${parentId})`)
 
     await sql `INSERT INTO comments 
     (author_id, post_id, comment, parent_id)
@@ -34,7 +37,7 @@ export async function testing (formData) {
 // big database fetch for single name and your names
 export async function getNamesAndComments (postId) {
 
-        console.log("POSTID: ", postId)
+        // console.log("POSTID: ", postId)
 
         const result = await sql `SELECT 
         child_names.first_name, 
